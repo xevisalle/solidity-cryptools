@@ -24,4 +24,11 @@ contract BlsSignaturesTest is Test {
         OpPointG1 memory sum = BlsSignatures.addG1(opP, opP);
         assert(keccak256(opTwoP.xy) == keccak256(sum.xy));
     }
+
+    function test_TruncatedHash() public pure {
+        bytes memory message = abi.encodePacked(uint256(12345678));
+        bytes memory hash = hex"1e0fc0f9ab0fb4020573d77cf2abf68a53d8d7361ad5c79feb6a9e50244bef2a";
+
+        assert(keccak256(hash) == keccak256(BlsSignatures.truncatedHash(message)));
+    }
 }

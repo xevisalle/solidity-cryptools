@@ -36,6 +36,13 @@ library BlsSignatures {
     }
 
     /**
+     * @dev Hashes a given message and outputs a Keccak256 digest, with 2 bits truncated.
+     */
+    function truncatedHash(bytes memory message) internal pure returns (bytes memory) {
+        return abi.encode(uint256(keccak256(message)) & (uint256(1) << (254)) - 1);
+    }
+
+    /**
      * @dev Adds two G1 points.
      */
     function addG1(OpPointG1 memory P, OpPointG1 memory Q) internal view returns (OpPointG1 memory) {
