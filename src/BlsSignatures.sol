@@ -51,4 +51,14 @@ library BlsSignatures {
 
         return OpPointG1({xy: sum});
     }
+
+    /**
+     * @dev Multiplies a scalar by a G1 point.
+     */
+    function mulG1(bytes memory x, OpPointG1 memory P) internal view returns (OpPointG1 memory) {
+        (bool success, bytes memory mul) = address(0x0c).staticcall(bytes.concat(P.xy, x));
+        require(success, "BLS12-381 G1 scalar multiplication failed.");
+
+        return OpPointG1({xy: mul});
+    }
 }
